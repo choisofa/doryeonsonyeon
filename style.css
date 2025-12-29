@@ -490,3 +490,41 @@ body {
   font-size: 22px;
 }
 
+/* ===== 최종 확정: iPhone 모바일 세로 전용 ===== */
+@media (max-width: 768px) and (orientation: portrait) {
+
+  /* 배경 완전 고정 + 흰 띠 제거 */
+  html, body {
+    background: none !important;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url("bg.jpg") no-repeat left center / cover; /* inherit 금지! 직접 넣기 */
+    z-index: -1;
+  }
+
+  body {
+    min-height: 100dvh;
+  }
+
+  /* 모바일 뒤로가기 버튼 (화살표 고정) */
+  .mobile-back {
+    display: block;
+    position: relative;
+    font-family: "UhbeeNaHyun" !important;
+    font-size: 22px;
+    color: transparent !important; /* 글자는 숨김 */
+  }
+
+  .mobile-back::before {
+    content: "←";
+    color: black;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
