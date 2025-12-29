@@ -1,8 +1,11 @@
 @font-face {
   font-family: "Uhbee NaHyun";
-  src: url("./Uhbee NaHyun.ttf") format("truetype");
+  src: url("./UhbeeNaHyun.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
   font-display: swap;
 }
+
 
 /* ===== 기본 ===== */
 * {
