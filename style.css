@@ -1,7 +1,7 @@
-/* ===== 폰트 등록 ===== */
 @font-face {
   font-family: "Uhbee NaHyun";
-  src: url("fonts/UhbeeNaHyun.ttf") format("truetype");
+  src: url("./Uhbee NaHyun.ttf") format("truetype");
+  font-display: swap;
 }
 
 /* ===== 기본 ===== */
