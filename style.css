@@ -414,3 +414,20 @@ color: #000000;
   }
 }
 
+/* ===== 모바일 "세로" 전용 배경 위치 수정 ===== */
+@media (max-width: 768px) and (orientation: portrait) {
+  html {
+    background-position: left center;
+  }
+}
+
+/* ===== iOS Safari 흰 띠 방지 + 전체 배경 꽉 채우기 ===== */
+html {
+  height: -webkit-fill-available;
+}
+
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
