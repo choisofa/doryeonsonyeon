@@ -1,10 +1,12 @@
+/* ===== 어비 폰트 웹폰트 적용 ===== */
 @font-face {
   font-family: "Uhbee NaHyun";
-  src: url("./UhbeeNaHyun.ttf") format("truetype");
-  font-style: normal;
+  src: url("./UhbeeNaHyun.woff") format("woff");
   font-weight: normal;
+  font-style: normal;
   font-display: swap;
 }
+
 
 
 /* ===== 기본 ===== */
