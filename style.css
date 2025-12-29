@@ -431,3 +431,16 @@ body {
   min-height: -webkit-fill-available;
 }
 
+/* ===== iPhone / 모바일 세로 전용 확정 해결 ===== */
+@media (max-width: 768px) and (orientation: portrait) {
+  html {
+    background-position: left center !important;
+    background-size: cover !important;
+    background-attachment: scroll !important; /* ← 이게 핵심 */
+  }
+
+  body {
+    min-height: 100dvh; /* iOS 17 최신 단위 */
+  }
+}
+
