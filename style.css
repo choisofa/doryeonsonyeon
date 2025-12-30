@@ -380,70 +380,150 @@ color: #000000;
   display: none !important;
 }
 
-/* =========================
-   iPhone Safari(모바일 세로) 최종 패치
-   - 흰띠 방지(바탕색 고정)
-   - 배경은 고정(스크롤해도 배경 안 움직임)
-   - 스크롤은 가사 영역만
-========================= */
-@media (max-width: 768px) and (orientation: portrait) {
 
-  /* 흰색 비침 원천 차단 */
-  html, body {
-    margin: 0;
-    height: 100%;
-    background-color: #b98974 !important; 
-  }
-
-  /* 바디는 고정(페이지 자체 스크롤 금지) */
-  body {
-    overflow: hidden !important;
-    padding: 0 !important; /* 기존 모바일 padding(20px) 때문에 흰띠 더 잘 보였음 */
-  }
+/* ========================= */
+/* 모바일 세로 전용 (확정) */
+/* ========================= */
+@media (max-width: 768px) {
 
 
-  /* 상단(노치/상태바) 단색으로 덮기 */
-  .ios-top-bar {
+  .logo-floating {
     position: fixed;
-    top: 0; left: 0; right: 0;
-    height: max(env(safe-area-inset-top), 24px);
-    background: #b98974;
-    z-index: 9999;
-    pointer-events: none;
+    right: 16px;
+    bottom: 16px;
+
+    /* 🔥 이 두 줄이 핵심 */
+    top: auto;
+    left: auto;
+
+    z-index: 2000;
   }
 
-  /* 레이아웃을 화면 높이에 맞추고 */
-  .layout {
-    height: 100dvh;
-    display: flex;
-    flex-direction: column;
+  .choisofa-logo {
+    width: 140px !important;
   }
 
-  /* 스크롤은 오른쪽(가사)만 */
-  .content {
-    flex: 1;
-    min-height: 0;                 /* 이게 있어야 overflow가 진짜로 먹음 */
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: env(safe-area-inset-bottom);
+  #about {
+    position: static;
+    margin-top: 12px;
+  }
+}
+
+/* 모바일에서 기본 표시 가능하게 (hidden 붙으면 다시 숨김) */
+@media (max-width: 768px) {
+  .mobile-back {
+    display: block;
+  }
+}
+
+/* ===== 모바일 "세로" 전용 배경 위치 수정 ===== */
+@media (max-width: 768px) and (orientation: portrait) {
+  html {
+    background-position: left center;
+  }
+}
+
+/* ===== iOS Safari 흰 띠 방지 + 전체 배경 꽉 채우기 ===== */
+html {
+  height: -webkit-fill-available;
+}
+
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+/* ===== iPhone / 모바일 세로 전용 확정 해결 ===== */
+@media (max-width: 768px) and (orientation: portrait) {
+  html {
+    background-position: left center !important;
+    background-size: cover !important;
+    background-attachment: scroll !important; /* ← 이게 핵심 */
   }
 
-  /* 모바일 뒤로가기 버튼: 화살표만 보이게 */
+  body {
+    min-height: 100dvh; /* iOS 17 최신 단위 */
+  }
+}
+
+/* ===== 모바일 세로: 배경 완전 고정 + 흰띠 제거 ===== */
+@media (max-width: 768px) and (orientation: portrait) {
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: inherit;
+    background-size: cover;
+    background-position: left center;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+
+  html, body {
+    height: auto;
+    min-height: 100dvh;
+    background: none !important; /* 기존 html/body 배경 제거 */
+  }
+}
+@media (max-width: 768px) and (orientation: portrait) {
   .mobile-back {
     font-family: "UhbeeNaHyun" !important;
-    font-size: 22px;
-    background: none;
-    border: none;
-    color: transparent;            /* 글자 숨김 */
-    position: relative;
+    color: black !important;
   }
+}
+
+.mobile-back {
+  position: relative;
+  color: transparent; /* 글자는 안 보이게 */
+}
+
+.mobile-back::before {
+  content: "←";
+  color: black;
+  font-family: "UhbeeNaHyun";
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.mobile-back {
+  font-size: 22px;
+}
+
+/* ===== 최종 확정: iPhone 모바일 세로 전용 ===== */
+@media (max-width: 768px) and (orientation: portrait) {
+
+  /* 배경 완전 고정 + 흰 띠 제거 */
+  html, body {
+    background: none !important;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url("bg.jpg") no-repeat left center / cover; /* inherit 금지! 직접 넣기 */
+    z-index: -1;
+  }
+
+  body {
+    min-height: 100dvh;
+  }
+
+  /* 모바일 뒤로가기 버튼 (화살표 고정) */
+  .mobile-back {
+    display: block;
+    position: relative;
+    font-family: "UhbeeNaHyun" !important;
+    font-size: 22px;
+    color: transparent !important; /* 글자는 숨김 */
+  }
+
   .mobile-back::before {
     content: "←";
-    color: #000;
+    color: black;
     position: absolute;
     left: 0;
     top: 0;
   }
 }
-
-
