@@ -571,28 +571,17 @@ body {
   }
 }
 
-/* ========================= */
-/* 인트로 풀스크린 오버레이 */
-/* ========================= */
 #intro-overlay {
   position: fixed;
   inset: 0;
-  background: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 99999;
-  opacity: 1;
-  transition: opacity 1.2s ease;
-}
-
-#intro-overlay.hidden {
-  opacity: 0;
-  pointer-events: none;
+  background: transparent; /* 반드시 투명 */
+  z-index: 9999;
 }
 
 #intro-video {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  background: transparent; /* 영상 배경도 투명 */
 }
+
+
