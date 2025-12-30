@@ -589,6 +589,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const albumHero = document.getElementById('album-hero');
 const albumLinks = document.getElementById('album-links');
 const albumCover = document.querySelector('.album-cover');
+  const intro = document.getElementById('intro-overlay');
+const introVideo = document.getElementById('intro-video');
+
+// 영상 끝나면 자동 페이드아웃
+if (introVideo) {
+  introVideo.addEventListener('ended', () => {
+    intro.classList.add('hidden');
+  });
+}
+
+// 혹시 영상 재생 안되면 4초 후 강제 제거 (안전장치)
+setTimeout(() => {
+  intro.classList.add('hidden');
+}, 4000);
+
 
 // 커버 클릭 → 링크 토글
 if (albumCover) {
@@ -705,6 +720,7 @@ logo.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
