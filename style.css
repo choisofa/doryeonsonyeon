@@ -614,5 +614,23 @@ body {
   border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 
+#comments {
+  max-height: 400px;   /* 댓글 상자 높이 — 필요하면 숫자 바꿔도 됨 */
+  overflow-y: auto;    /* 댓글 많은 경우, 안에서만 스크롤 */
+  padding-right: 6px;
+}
+
+.comment {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 8px 0;
+}
+
+.comment b {
+  color: #ff4a4a; /* 원하는 색으로 바꿔도 됨 */
+}
+
 
 
