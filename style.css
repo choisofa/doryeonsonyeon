@@ -380,242 +380,82 @@ color: #000000;
   display: none !important;
 }
 
-
-/* ========================= */
-/* 모바일 세로 전용 (확정) */
-/* ========================= */
-@media (max-width: 768px) {
-
-
-  .logo-floating {
-    position: fixed;
-    right: 16px;
-    bottom: 16px;
-
-    /* 🔥 이 두 줄이 핵심 */
-    top: auto;
-    left: auto;
-
-    z-index: 2000;
-  }
-
-  .choisofa-logo {
-    width: 140px !important;
-  }
-
-  #about {
-    position: static;
-    margin-top: 12px;
-  }
-}
-
-/* 모바일에서 기본 표시 가능하게 (hidden 붙으면 다시 숨김) */
-@media (max-width: 768px) {
-  .mobile-back {
-    display: block;
-  }
-}
-
-/* ===== 모바일 "세로" 전용 배경 위치 수정 ===== */
+/* =========================
+   iPhone Safari(모바일 세로) 최종 패치
+   - 흰띠 방지(바탕색 고정)
+   - 배경은 고정(스크롤해도 배경 안 움직임)
+   - 스크롤은 가사 영역만
+========================= */
 @media (max-width: 768px) and (orientation: portrait) {
-  html {
-    background-position: left center;
-  }
-}
 
-/* ===== iOS Safari 흰 띠 방지 + 전체 배경 꽉 채우기 ===== */
-html {
-  height: -webkit-fill-available;
-}
-
-body {
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
-}
-
-/* ===== iPhone / 모바일 세로 전용 확정 해결 ===== */
-@media (max-width: 768px) and (orientation: portrait) {
-  html {
-    background-position: left center !important;
-    background-size: cover !important;
-    background-attachment: scroll !important; /* ← 이게 핵심 */
+  /* 흰색 비침 원천 차단 */
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: #b98974 !important;
   }
 
+  /* 바디는 고정(페이지 자체 스크롤 금지) */
   body {
-    min-height: 100dvh; /* iOS 17 최신 단위 */
+    overflow: hidden !important;
+    padding: 0 !important; /* 기존 모바일 padding(20px) 때문에 흰띠 더 잘 보였음 */
   }
-}
 
-/* ===== 모바일 세로: 배경 완전 고정 + 흰띠 제거 ===== */
-@media (max-width: 768px) and (orientation: portrait) {
+  /* 배경을 “한 장”으로 고정 */
   body::before {
     content: "";
     position: fixed;
-    inset: 0;
-    background-image: inherit;
-    background-size: cover;
-    background-position: left center;
-    background-repeat: no-repeat;
+    left: -60px;
+    right: -60px;
+    top: 0;
+    bottom: -360px; /* 하단 Safari 바 움직여도 흰색 안 보이게 여유 */
+    background: url("bg.jpg") no-repeat left center / cover;
     z-index: -1;
+    pointer-events: none;
   }
 
-  html, body {
-    height: auto;
-    min-height: 100dvh;
-    background: none !important; /* 기존 html/body 배경 제거 */
-  }
-}
-@media (max-width: 768px) and (orientation: portrait) {
-  .mobile-back {
-    font-family: "UhbeeNaHyun" !important;
-    color: black !important;
-  }
-}
-
-.mobile-back {
-  position: relative;
-  color: transparent; /* 글자는 안 보이게 */
-}
-
-.mobile-back::before {
-  content: "←";
-  color: black;
-  font-family: "UhbeeNaHyun";
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
-.mobile-back {
-  font-size: 22px;
-}
-
-/* ===== 최종 확정: iPhone 모바일 세로 전용 ===== */
-@media (max-width: 768px) and (orientation: portrait) {
-
-  /* 배경 완전 고정 + 흰 띠 제거 */
-  html, body {
-    background: none !important;
-  }
-
-  body::before {
-    content: "";
+  /* 상단(노치/상태바) 단색으로 덮기 */
+  .ios-top-bar {
     position: fixed;
-    inset: 0;
-    background: url("bg.jpg") no-repeat left center / cover; /* inherit 금지! 직접 넣기 */
-    z-index: -1;
+    top: 0; left: 0; right: 0;
+    height: max(env(safe-area-inset-top), 24px);
+    background: #b98974;
+    z-index: 9999;
+    pointer-events: none;
   }
 
-  body {
-    min-height: 100dvh;
+  /* 레이아웃을 화면 높이에 맞추고 */
+  .layout {
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
   }
 
-  /* 모바일 뒤로가기 버튼 (화살표 고정) */
+  /* 스크롤은 오른쪽(가사)만 */
+  .content {
+    flex: 1;
+    min-height: 0;                 /* 이게 있어야 overflow가 진짜로 먹음 */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* 모바일 뒤로가기 버튼: 화살표만 보이게 */
   .mobile-back {
-    display: block;
-    position: relative;
     font-family: "UhbeeNaHyun" !important;
     font-size: 22px;
-    color: transparent !important; /* 글자는 숨김 */
+    background: none;
+    border: none;
+    color: transparent;            /* 글자 숨김 */
+    position: relative;
   }
-
   .mobile-back::before {
     content: "←";
-    color: black;
+    color: #000;
     position: absolute;
     left: 0;
     top: 0;
   }
 }
 
-@media (max-width: 768px) and (orientation: portrait) {
-  body::before {
-    content: "";
-    position: fixed;
-    left: calc(-1 * env(safe-area-inset-left));
-    right: calc(-1 * env(safe-area-inset-right));
-    top: calc(-1 * env(safe-area-inset-top));
-    bottom: calc(-1 * env(safe-area-inset-bottom));
-    background: url("bg.jpg") no-repeat left center / cover;
-    z-index: -1;
-  }
-
-  html, body {
-    background: black;   /* 혹시라도 대비용 */
-    min-height: 100lvh;  /* iOS 17 이상 안정 단위 */
-  }
-}
-
-/* iPhone 세로 모드에서 배경을 더 길게 늘려 깔기 */
-@media (max-width: 768px) and (orientation: portrait) {
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0 -50px -100px -50px; /* 아래쪽 더 넓게 깔기 */
-    background: url("bg.jpg") no-repeat left center / cover;
-    z-index: -1;
-  }
-
- html, body {
-  background: #b98974;
-}
-
-.ios-top-bar {
-  height: max(env(safe-area-inset-top), 24px);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: env(safe-area-inset-top);
-  background: #b98974;
-  z-index: 9999;
-}
-
-}
-}
-
-/* ================================
-   iPhone Safari(모바일 세로) 최종 고정 패치
-   - 흰 띠 방지(바탕색 고정)
-   - 배경은 고정 레이어 1장만 사용
-   - 아래쪽 더 길게 깔기
-================================ */
-@media (max-width: 768px) and (orientation: portrait) {
-  /* 흰색이 비칠 틈을 원천 차단 */
-  html, body {
-    background: #b98974 !important;
-  }
-
-  /* 배경사진: iOS에서도 안정적으로 고정되게 */
-  body::before {
-    content: "";
-    position: fixed;
-    left: -50px;
-    right: -50px;
-    top: 0;
-    bottom: -260px;                 /* ✅ 아래 흰띠 방지: 더 길게 */
-    background: url("bg.jpg") no-repeat left center / cover;
-    z-index: -2;
-    pointer-events: none;
-  }
-
-  /* 상단 상태바쪽(이미지 못채우는 영역) 단색으로 덮기 */
-  .ios-top-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: max(env(safe-area-inset-top), 24px) !important;  /* ✅ 안전하게 보이게 */
-    background: #b98974 !important;
-    z-index: 9999;
-    pointer-events: none;
-  }
-
-  /* 모바일 뒤로가기 버튼 폰트/색 고정(너가 말한 깨짐 방지) */
-  .mobile-back,
-  .mobile-back::before {
-    font-family: "UhbeeNaHyun" !important;
-    color: #000 !important;
-  }
-}
 
