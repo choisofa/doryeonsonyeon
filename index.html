@@ -585,6 +585,39 @@ document.addEventListener('DOMContentLoaded', () => {
   const sidebar = document.querySelector('.sidebar');
   const logoFloating = document.querySelector('.logo-floating');
   const backBtn = document.getElementById('mobile-back');
+  const albumHero = document.getElementById('album-hero');
+const albumLinks = document.getElementById('album-links');
+const albumCover = document.querySelector('.album-cover');
+
+// 커버 클릭 → 링크 토글
+if (albumCover) {
+  albumCover.addEventListener('click', () => {
+    albumLinks.classList.toggle('hidden');
+  });
+}
+
+// 히어로 숨기기 / 보이기
+function hideAlbumHero() {
+  if (albumHero) albumHero.style.display = 'none';
+}
+
+function showAlbumHero() {
+  if (albumHero) albumHero.style.display = '';
+}
+
+// 트랙 클릭 시 히어로 숨김
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    hideAlbumHero();
+  });
+});
+
+// 타이틀 카드 → 홈 복귀 시 다시 보이게
+title.addEventListener('click', () => {
+  showAlbumHero();
+  albumLinks.classList.add('hidden');
+});
+
 
   // ===== 모바일 뒤로가기 버튼 =====
   if (backBtn) {
@@ -671,6 +704,7 @@ logo.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
