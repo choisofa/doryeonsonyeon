@@ -528,3 +528,21 @@ body {
   }
 }
 
+@media (max-width: 768px) and (orientation: portrait) {
+  body::before {
+    content: "";
+    position: fixed;
+    left: calc(-1 * env(safe-area-inset-left));
+    right: calc(-1 * env(safe-area-inset-right));
+    top: calc(-1 * env(safe-area-inset-top));
+    bottom: calc(-1 * env(safe-area-inset-bottom));
+    background: url("bg.jpg") no-repeat left center / cover;
+    z-index: -1;
+  }
+
+  html, body {
+    background: black;   /* 혹시라도 대비용 */
+    min-height: 100lvh;  /* iOS 17 이상 안정 단위 */
+  }
+}
+
