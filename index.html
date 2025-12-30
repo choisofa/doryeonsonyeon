@@ -52,6 +52,18 @@
       그럼 안녕
     </p>
 
+    <div id="comments-box">
+
+  <h3>댓글 남기고 가라</h3>
+
+  <input id="nickname" placeholder="닉네임 (선택)">
+  <textarea id="commentInput" placeholder="하고싶은 말"></textarea>
+  <button id="submitComment">댓글 남기기</button>
+
+  <div id="comments"></div>
+
+</div>
+
 
   </div>
 
@@ -711,7 +723,64 @@ logo.addEventListener('click', () => {
 
 
 });
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot } 
+from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCDzMtqWIo8eq3rYTLA89cHovl5zalNABA",
+  authDomain: "chat-8d776.firebaseapp.com",
+  projectId: "chat-8d776",
+  storageBucket: "chat-8d776.firebasestorage.app",
+  messagingSenderId: "29994250404",
+  appId: "1:29994250404:web:6cde18f3f08ad6c890b631",
+  measurementId: "G-X8VGNNRSQV"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const nicknameInput = document.getElementById("nickname");
+const commentInput = document.getElementById("commentInput");
+const submitBtn = document.getElementById("submitComment");
+const commentsBox = document.getElementById("comments");
+
+// 닉네임 저장 → 다음에도 자동 적용
+nicknameInput.value = localStorage.getItem("nickname") || "";
+
+submitBtn.onclick = async () => {
+  const nickname = nicknameInput.value.trim() || "익명";
+  const text = commentInput.value.trim();
+
+  if (!text) return;
+
+  localStorage.setItem("nickname", nickname);
+
+  await addDoc(collection(db, "comments"), {
+    nickname,
+    text,
+    created: serverTimestamp()
+  });
+
+  commentInput.value = "";
+};
+
+// 실시간 댓글 불러오기
+const q = query(collection(db, "comments"), orderBy("created", "desc"));
+
+onSnapshot(q, (snapshot) => {
+  commentsBox.innerHTML = "";
+  snapshot.forEach(doc => {
+    const c = doc.data();
+    const div = document.createElement("div");
+    div.className = "comment";
+    div.innerHTML = `<b>${c.nickname}</b><br>${c.text}`;
+    commentsBox.appendChild(div);
+  });
+});
 </script>
+
 
 
 
@@ -720,6 +789,7 @@ logo.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
