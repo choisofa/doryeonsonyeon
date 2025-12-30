@@ -52,13 +52,17 @@
       그럼 안녕
     </p>
 
+    <button id="openComment">댓글 남기기</button>
+
     <div id="comments-box">
 
   <h3>코멘트</h3>
 
+      <div id="commentForm" style="display:none;">
   <input id="nickname" placeholder="닉네임 (선택)">
   <textarea id="commentInput" placeholder="하고싶은 말"></textarea>
   <button id="submitComment">댓글 남기기</button>
+        </div>
 
   <div id="comments"></div>
 
@@ -741,6 +745,13 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+  const openBtn = document.getElementById("openComment");
+const form = document.getElementById("commentForm");
+
+openBtn.onclick = () => {
+  form.style.display = form.style.display === "none" ? "block" : "none";
+};
+
 
 const nicknameInput = document.getElementById("nickname");
 const commentInput = document.getElementById("commentInput");
@@ -790,6 +801,7 @@ onSnapshot(q, (snapshot) => {
 
 </body>
 </html>
+
 
 
 
