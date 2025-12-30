@@ -401,18 +401,6 @@ color: #000000;
     padding: 0 !important; /* 기존 모바일 padding(20px) 때문에 흰띠 더 잘 보였음 */
   }
 
-  /* 배경을 “한 장”으로 고정 */
-  body::before {
-    content: "";
-    position: fixed;
-    left: -60px;
-    right: -60px;
-    top: 0;
-    bottom: -360px; /* 하단 Safari 바 움직여도 흰색 안 보이게 여유 */
-    background: url("bg.jpg") no-repeat left center / cover;
-    z-index: -1;
-    pointer-events: none;
-  }
 
   /* 상단(노치/상태바) 단색으로 덮기 */
   .ios-top-bar {
