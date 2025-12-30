@@ -561,6 +561,7 @@ body {
 }
 
 .ios-top-bar {
+  height: max(env(safe-area-inset-top), 24px);
   position: fixed;
   top: 0;
   left: 0;
