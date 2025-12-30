@@ -584,4 +584,35 @@ body {
   background: transparent; /* 영상 배경도 투명 */
 }
 
+#comments-box {
+  margin-top: 40px;
+  background: rgba(0,0,0,0.4);
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+}
+
+#nickname,
+#commentInput {
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+#submitComment {
+  margin-top: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.comment {
+  margin-top: 14px;
+  padding: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+
 
