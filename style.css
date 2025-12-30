@@ -556,8 +556,8 @@ body {
     z-index: -1;
   }
 
-  html, body {
-    background: #000; /* 혹시라도 대비용 */
-  }
+ html, body {
+  background: #b98974;
 }
+
 
