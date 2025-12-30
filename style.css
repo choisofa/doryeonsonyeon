@@ -560,4 +560,14 @@ body {
   background: #b98974;
 }
 
+.ios-top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: env(safe-area-inset-top);
+  background: #b98974;
+  z-index: 9999;
+}
+
 
