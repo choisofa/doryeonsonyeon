@@ -546,3 +546,18 @@ body {
   }
 }
 
+/* iPhone 세로 모드에서 배경을 더 길게 늘려 깔기 */
+@media (max-width: 768px) and (orientation: portrait) {
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0 -50px -100px -50px; /* 아래쪽 더 넓게 깔기 */
+    background: url("bg.jpg") no-repeat left center / cover;
+    z-index: -1;
+  }
+
+  html, body {
+    background: #000; /* 혹시라도 대비용 */
+  }
+}
+
