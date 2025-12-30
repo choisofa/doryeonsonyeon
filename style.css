@@ -631,6 +631,27 @@ body {
   color: inherit !important;
 }
 
+#comments-box {
+  margin-top: 10px;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+#openComment {
+  margin-top: 12px;
+}
+
+#about {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 오른쪽 텍스트와 동일 정렬 */
+}
+
+#comments {
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  opacity: 0.9;
+}
 
 
 
