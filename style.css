@@ -574,3 +574,48 @@ body {
 }
 }
 
+/* ================================
+   iPhone Safari(모바일 세로) 최종 고정 패치
+   - 흰 띠 방지(바탕색 고정)
+   - 배경은 고정 레이어 1장만 사용
+   - 아래쪽 더 길게 깔기
+================================ */
+@media (max-width: 768px) and (orientation: portrait) {
+  /* 흰색이 비칠 틈을 원천 차단 */
+  html, body {
+    background: #b98974 !important;
+  }
+
+  /* 배경사진: iOS에서도 안정적으로 고정되게 */
+  body::before {
+    content: "";
+    position: fixed;
+    left: -50px;
+    right: -50px;
+    top: 0;
+    bottom: -260px;                 /* ✅ 아래 흰띠 방지: 더 길게 */
+    background: url("bg.jpg") no-repeat left center / cover;
+    z-index: -2;
+    pointer-events: none;
+  }
+
+  /* 상단 상태바쪽(이미지 못채우는 영역) 단색으로 덮기 */
+  .ios-top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: max(env(safe-area-inset-top), 24px) !important;  /* ✅ 안전하게 보이게 */
+    background: #b98974 !important;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  /* 모바일 뒤로가기 버튼 폰트/색 고정(너가 말한 깨짐 방지) */
+  .mobile-back,
+  .mobile-back::before {
+    font-family: "UhbeeNaHyun" !important;
+    color: #000 !important;
+  }
+}
+
