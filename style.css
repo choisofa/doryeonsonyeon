@@ -1081,6 +1081,58 @@ body {
   }
 }
 
+/* =========================
+   모바일 세로: (1) 인트로 중 로고 숨김
+             (2) 댓글창이 로고 뒤로 이어지게(잘림 느낌 제거)
+========================= */
+@media (max-width: 768px) and (orientation: portrait) {
+
+  /* (1) 인트로 오버레이가 살아있는 동안 로고 숨기기
+     - intro가 .hidden 되면 다시 로고 보임
+     - #intro-overlay가 DOM에서 .logo-floating보다 위에 있을 때 동작 */
+  #intro-overlay:not(.hidden) ~ .logo-floating {
+    display: none !important;
+  }
+
+  /* 로고는 항상 둥둥 떠있게 */
+  .logo-floating{
+    position: fixed !important;
+    right: 16px !important;
+    bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+    z-index: 10002 !important;
+    overflow: visible !important; /* 부모 때문에 잘리는 느낌 방지 */
+  }
+
+  #logo-toggle{
+    position: relative !important;
+    z-index: 10002 !important;
+    pointer-events: auto !important;
+  }
+
+  /* (2) 댓글창(#about)은 "로고 위로 띄워서 끊기게" 하지 말고,
+         아래까지 내려오게 해서 로고 뒤로도 보이게 */
+  #about.about-visible{
+    position: fixed !important;
+    right: 16px !important;
+    bottom: calc(16px + env(safe-area-inset-bottom)) !important; /* ✅ 로고랑 같은 바닥 */
+    width: min(92vw, 420px) !important;
+    max-height: 70dvh !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch;
+
+    z-index: 10001 !important; /* ✅ 로고보다 1단계 아래 */
+    padding-bottom: 120px !important; /* ✅ 로고에 내용 가리지 않게(배경은 뒤로 이어짐) */
+
+    background: rgba(0,0,0,0.55) !important; /* 필요 없으면 none으로 */
+    border-radius: 12px !important;
+    backdrop-filter: blur(6px);
+  }
+
+  #about.about-hidden{
+    display: none !important;
+  }
+}
+
 
 
 
