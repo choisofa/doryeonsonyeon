@@ -790,11 +790,12 @@ body {
 }
 
 .track-meta{
-  margin: -14px 0 18px;       /* h2 밑 간격 “살짝 붙이기” */
+  margin: -14px 0 5px;       /* h2 밑 간격 “살짝 붙이기” */
   font-size: 14px;
-  opacity: 0.55;              /* 흐리게 */
+  opacity: 0.8;              /* 흐리게 */
   letter-spacing: 0.2px;
 }
+
 
 
 
