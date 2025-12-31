@@ -682,7 +682,6 @@ body {
   box-shadow:none;
   padding:6px 0;
   margin:6px 0;
-  border-bottom:1px solid rgba(255,255,255,0.15); /* 너무 싫으면 지워도 됨 */
 }
 
 /* 닉네임은 굵기만 */
@@ -719,6 +718,7 @@ body {
 #comments.show-scrollbar::-webkit-scrollbar-thumb{
   background-color:rgba(255,255,255,0.35);
 }
+
 
 
 
