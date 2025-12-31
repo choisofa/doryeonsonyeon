@@ -698,7 +698,7 @@ body {
   color: inherit !important;
 }
 
-/* ===== 스크롤바 투명 감성 ===== */
+/* ===== comments 스크롤바: 기본 숨김, hover 때만 보이기 ===== */
 #comments::-webkit-scrollbar {
   width: 6px;
 }
@@ -707,13 +707,16 @@ body {
   background: transparent;
 }
 
+/* 기본 상태: thumb 완전 투명 */
 #comments::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.2); /* 살짝 보이는 정도 */
+  background-color: rgba(255,255,255,0);
   border-radius: 0;
+  transition: background-color .25s ease;
 }
 
-#comments::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.35);
+/* hover 때만 나타남 */
+#comments:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.35);
 }
 
 #nickname,
@@ -775,5 +778,6 @@ body {
 .delBtn:hover{
   opacity:1;
 }
+
 
 
