@@ -698,6 +698,51 @@ body {
   color: inherit !important;
 }
 
+/* ===== 스크롤바 투명 감성 ===== */
+#comments::-webkit-scrollbar {
+  width: 6px;
+}
 
+#comments::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#comments::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2); /* 살짝 보이는 정도 */
+  border-radius: 0;
+}
+
+#comments::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.35);
+}
+
+#nickname,
+#commentInput {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 0;
+  color: white;
+  outline: none;
+}
+
+#nickname::placeholder,
+#commentInput::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+
+#openComment,
+#submitComment {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.7);
+  border-radius: 0;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+#openComment:hover,
+#submitComment:hover {
+  background: rgba(255,255,255,0.15);
+}
 
 
