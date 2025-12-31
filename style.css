@@ -757,8 +757,31 @@ body {
   }
 }
 
+@media (min-width: 769px){
+  /* ✅ 설명글 전체 폰트 강제 고정(px) */
+  #about.about-visible p{
+    font-size: 18px !important;
+    line-height: 1.9 !important;
+  }
+}
 
+@media (min-width: 769px){
 
+  /* 로고 아래 공간 줄이기 */
+  img#logo-toggle.choisofa-logo{
+    margin-bottom: 6px !important;   /* 기본이 크면 이걸로 확 줄어듦 */
+  }
+
+  /* about(설명+댓글) 전체를 살짝 위로 올리기 */
+  #about{
+    margin-top: -14px !important;    /* 너무 올라가면 -8px 정도로 */
+  }
+
+  /* 댓글 리스트를 더 길게 (한 번에 더 많이 보이게) */
+  #comments{
+    max-height: 420px !important;    /* 지금보다 크게: 420~520 사이로 조절 */
+  }
+}
 
 
 
