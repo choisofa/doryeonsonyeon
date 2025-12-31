@@ -1133,6 +1133,58 @@ body {
   }
 }
 
+/* =========================
+   모바일 세로: 댓글창 원래처럼(투명) + 로고 클릭/레이어만 해결
+========================= */
+@media (max-width: 768px) and (orientation: portrait){
+
+  /* 인트로 중엔 로고 숨김 (JS가 body에 intro-active 붙여줄 거임) */
+  body.intro-active .logo-floating{
+    display: none !important;
+  }
+
+  /* 로고는 항상 최상단 */
+  .logo-floating{
+    position: fixed !important;
+    right: 16px !important;
+    bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+    z-index: 10002 !important;
+    overflow: visible !important;
+    pointer-events: auto !important;
+  }
+  #logo-toggle{
+    position: relative !important;
+    z-index: 10002 !important;
+    pointer-events: auto !important;
+  }
+
+  /* ✅ 댓글창: 네모/블러 전부 제거 → "댓글만" 떠있게 원복 */
+  #about.about-visible{
+    position: fixed !important;
+    right: 16px !important;
+    bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+
+    width: min(92vw, 520px) !important;
+    max-height: 70dvh !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch;
+
+    z-index: 10001 !important;  /* 로고보다 아래 → 로고는 항상 눌림 */
+
+    background: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  #about.about-hidden{
+    display: none !important;
+  }
+}
+
 
 
 
