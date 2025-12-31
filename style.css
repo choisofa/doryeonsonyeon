@@ -1030,6 +1030,18 @@ body {
   }
 }
 
+/* =========================
+   모바일 세로: 가사 글자색 = 검정
+========================= */
+@media (max-width: 768px) and (orientation: portrait) {
+
+  #lyrics,
+  #lyrics *{
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important; /* iOS */
+  }
+
+
 
 
 
