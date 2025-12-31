@@ -783,6 +783,12 @@ body {
   }
 }
 
+@media (min-width: 769px){
+  #about p{
+    line-height: 1.35 !important; /* 1.25~1.5 사이에서 취향대로 */
+  }
+}
+
 
 
 
