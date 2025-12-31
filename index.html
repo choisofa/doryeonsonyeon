@@ -729,8 +729,10 @@ logo.addEventListener('click', () => {
   </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot } 
+import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, deleteDoc }
 from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { getAuth, signInAnonymously, onAuthStateChanged }
+from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCDzMtqWIo8eq3rYTLA89cHovl5zalNABA",
@@ -744,53 +746,90 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-  const openBtn = document.getElementById("openComment");
+
+// ===== 익명 로그인 (내 댓글만 삭제용 uid 만들기) =====
+const auth = getAuth(app);
+signInAnonymously(auth).catch(console.error);
+
+// ===== UI 토글 =====
+const openBtn = document.getElementById("openComment");
 const form = document.getElementById("commentForm");
-
-openBtn.onclick = () => {
-  form.style.display = form.style.display === "none" ? "block" : "none";
-};
-
+if (openBtn && form) {
+  openBtn.onclick = () => {
+    form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+  };
+}
 
 const nicknameInput = document.getElementById("nickname");
-const commentInput = document.getElementById("commentInput");
-const submitBtn = document.getElementById("submitComment");
-const commentsBox = document.getElementById("comments");
+const commentInput  = document.getElementById("commentInput");
+const submitBtn     = document.getElementById("submitComment");
+const commentsBox   = document.getElementById("comments");
 
-// 닉네임 저장 → 다음에도 자동 적용
-nicknameInput.value = localStorage.getItem("nickname") || "";
+if (nicknameInput) nicknameInput.value = localStorage.getItem("nickname") || "";
 
-submitBtn.onclick = async () => {
-  const nickname = nicknameInput.value.trim() || "익명";
-  const text = commentInput.value.trim();
+// ===== 댓글 작성 =====
+if (submitBtn) {
+  submitBtn.onclick = async () => {
+    const nickname = (nicknameInput?.value.trim() || "익명");
+    const text = (commentInput?.value.trim() || "");
+    if (!text) return;
 
-  if (!text) return;
+    localStorage.setItem("nickname", nickname);
 
-  localStorage.setItem("nickname", nickname);
+    const user = auth.currentUser; // 익명 로그인 유저
+    if (!user) return; // 아직 로그인 전이면 잠깐 기다려야 함
 
-  await addDoc(collection(db, "comments"), {
-    nickname,
-    text,
-    created: serverTimestamp()
-  });
+    await addDoc(collection(db, "comments"), {
+      nickname,
+      text,
+      uid: user.uid,
+      created: serverTimestamp()
+    });
 
-  commentInput.value = "";
-};
+    commentInput.value = "";
+  };
+}
 
-// 실시간 댓글 불러오기
+// ===== 실시간 렌더 =====
 const q = query(collection(db, "comments"), orderBy("created", "desc"));
 
-onSnapshot(q, (snapshot) => {
-  commentsBox.innerHTML = "";
-  snapshot.forEach(doc => {
-    const c = doc.data();
-    const div = document.createElement("div");
-    div.className = "comment";
-    div.innerHTML = `<b>${c.nickname}</b><br>${c.text}`;
-    commentsBox.appendChild(div);
+onAuthStateChanged(auth, () => {
+  onSnapshot(q, (snapshot) => {
+    commentsBox.innerHTML = "";
+
+    snapshot.forEach((d) => {
+      const c = d.data();
+      const mine = (auth.currentUser && c.uid === auth.currentUser.uid);
+
+      const div = document.createElement("div");
+      div.className = "comment";
+      div.innerHTML = `
+        <div class="cmt-head">
+          <b>${c.nickname || "익명"}</b>
+          ${mine ? `<span class="delBtn" data-id="${d.id}">✕</span>` : ``}
+        </div>
+        <div class="cmt-body">${c.text || ""}</div>
+      `;
+
+      commentsBox.appendChild(div);
+    });
   });
 });
+
+// ===== 내 댓글 삭제 (이벤트 위임) =====
+commentsBox.addEventListener("click", async (e) => {
+  const target = e.target;
+  if (target.classList.contains("delBtn")) {
+    const id = target.dataset.id;
+    try {
+      await deleteDoc(doc(db, "comments", id));
+    } catch (err) {
+      console.error(err);
+    }
+  }
+});
 </script>
+
 
 
 
@@ -800,6 +839,7 @@ onSnapshot(q, (snapshot) => {
 
 </body>
 </html>
+
 
 
 
