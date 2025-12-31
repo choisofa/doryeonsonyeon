@@ -731,21 +731,18 @@ body {
   white-space:nowrap;
 }
 
-/* ===== PC에서만: 로고 + about(설명) 글자 키우기 ===== */
 @media (min-width: 769px) {
-
-  /* choisofa 로고 크게 */
-  #logo-toggle{
-    width: 260px;      /* ← 더 크거나 작게 하고 싶으면 여기 숫자만 */
-    height: auto;
+  img#logo-toggle.choisofa-logo{
+    width: 260px !important;
+    height: auto !important;
   }
 
-  /* 최소파: 설명글 전체 글자 키우기 */
   #about p{
-    font-size: 18px;   /* ← 여기만 조절 */
-    line-height: 1.8;  /* 가독성 */
+    font-size: 18px !important;
+    line-height: 1.8 !important;
   }
 }
+
 
 
 
