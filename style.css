@@ -966,6 +966,38 @@ body {
 }
 
 
+/* =========================
+   iPhone 모바일 세로: 배경/오버플로우/띠 제거 최종 패치
+========================= */
+@media (max-width: 768px) and (orientation: portrait) {
+
+  /* 1) 흰띠/바운스 방지용 "바탕"은 html에만 */
+  html{
+    background: #000 !important;
+    overflow-x: hidden !important;
+  }
+
+  /* 2) body는 투명으로(배경을 가리지 않게) */
+  body{
+    background: transparent !important;
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
+
+  /* 3) bg.jpg는 화면 정중앙 기준으로 꽉 차게 */
+  body::before{
+    background-position: center center !important; /* 기존 left center 덮기 */
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    pointer-events: none;
+  }
+
+  /* 4) 100vw 때문에 생기는 가로 밀림/띠 방지 */
+  #intro-video{
+    width: 100% !important;  /* 기존 100vw 덮기 */
+  }
+}
+
 
 
 
