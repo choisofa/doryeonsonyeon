@@ -1041,6 +1041,46 @@ body {
     -webkit-text-fill-color: #000 !important; /* iOS */
   }
 
+/* =========================
+   모바일: 댓글창(#about)이 로고 클릭을 막는 문제 해결
+   - 댓글창은 로고 "위"에 따로 띄우고
+   - 로고는 항상 최상단 클릭 가능하게
+========================= */
+@media (max-width: 768px) and (orientation: portrait) {
+  .logo-floating{
+    position: fixed !important;
+    right: 16px !important;
+    bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+    z-index: 10000 !important;
+  }
+
+  /* 로고는 무조건 클릭 최상단 */
+  #logo-toggle{
+    position: relative !important;
+    z-index: 10002 !important;
+  }
+
+  /* 댓글/설명(#about)은 로고 위에 따로 떠있게 */
+  #about{
+    position: fixed !important;
+    right: 16px !important;
+
+    /* 로고 높이만큼 위로 띄움 (로고 140px 기준) */
+    bottom: calc(16px + env(safe-area-inset-bottom) + 140px + 12px) !important;
+
+    width: min(88vw, 420px) !important;
+    max-height: min(70dvh, 520px) !important;
+    overflow: auto !important;
+
+    z-index: 10001 !important;
+
+    /* 기존 “박스 제거” 컨셉 유지 */
+    background: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+
 
 
 
