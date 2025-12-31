@@ -793,7 +793,7 @@ if (commentsBox) {
 
     // 기본 스크롤을 막고 우리가 직접 스크롤 이동시킴
     e.preventDefault();
-    commentsBox.scrollTop += e.deltaY;
+    commentsBox.scrollTop += e.deltaY * 0.45;
   }, { passive: false });
 
   // 모바일/터치 시작 시도도 열어주기(터치는 기본 스크롤 그대로 사용)
@@ -873,6 +873,7 @@ commentsBox.addEventListener("click", async (e) => {
 
 </body>
 </html>
+
 
 
 
