@@ -631,6 +631,34 @@ const albumLinks = document.getElementById('album-links');
 const albumCover = document.querySelector('.album-cover');
   const intro = document.getElementById('intro-overlay');
 const introVideo = document.getElementById('intro-video');
+  // ===== 모바일에서 앨범커버 위치 이동(타이틀 밑으로) =====
+const mobileAlbumSlot = document.getElementById('mobile-album-slot');
+const albumHeroOriginalParent = albumHero?.parentElement;
+const albumHeroOriginalNext = albumHero?.nextSibling;
+
+function placeAlbumHeroByViewport() {
+  if (!albumHero || !mobileAlbumSlot || !albumHeroOriginalParent) return;
+
+  const isMobile = window.innerWidth <= 768;
+
+  if (isMobile) {
+    // 타이틀 밑 슬롯으로 이동
+    mobileAlbumSlot.appendChild(albumHero);
+  } else {
+    // 원래 자리(PC)로 복귀
+    if (albumHeroOriginalNext) {
+      albumHeroOriginalParent.insertBefore(albumHero, albumHeroOriginalNext);
+    } else {
+      albumHeroOriginalParent.appendChild(albumHero);
+    }
+  }
+}
+
+// 최초 1회 + 화면 회전/리사이즈 대응
+placeAlbumHeroByViewport();
+window.addEventListener('resize', placeAlbumHeroByViewport);
+window.addEventListener('orientationchange', placeAlbumHeroByViewport);
+
 
 // 영상 끝나면 자동 페이드아웃
 if (introVideo) {
@@ -683,6 +711,10 @@ title.addEventListener('click', () => {
       title.style.display = '';
       lyrics.style.display = 'none';
       backBtn.classList.add('hidden');
+      
+      showAlbumHero();
+albumLinks.classList.add('hidden');
+
     });
   }
 
@@ -957,6 +989,7 @@ commentsBox.addEventListener("click", async (e) => {
 
 </body>
 </html>
+
 
 
 
