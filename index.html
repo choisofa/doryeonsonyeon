@@ -773,17 +773,27 @@ const commentsBox   = document.getElementById("comments");
 // 닉네임 저장(로컬)
 if (nicknameInput) nicknameInput.value = localStorage.getItem("nickname") || "";
 
-// ===== 스크롤바: 스크롤 중에만 1초 표시 =====
+// ===== 스크롤: 평소엔 닫고, 휠 굴릴 때만 1초 열기 =====
 let sbTimer;
 if (commentsBox) {
-  commentsBox.addEventListener("scroll", () => {
-    commentsBox.classList.add("show-scrollbar");
+  // 기본은 닫힘
+  commentsBox.style.overflowY = "hidden";
+
+  // 휠/터치패드 입력 감지하면 잠깐 열기
+  const openScrollTemporarily = () => {
+    commentsBox.style.overflowY = "auto";   // ✅ 이때만 스크롤 가능 (바도 이때만 생김)
     clearTimeout(sbTimer);
     sbTimer = setTimeout(() => {
-      commentsBox.classList.remove("show-scrollbar");
+      commentsBox.style.overflowY = "hidden";
     }, 1000);
-  });
+  };
+
+  commentsBox.addEventListener("wheel", openScrollTemporarily, { passive: true });
+  // 트랙패드/모바일 대비(드래그/터치 스크롤 시작에도 열림)
+  commentsBox.addEventListener("touchstart", openScrollTemporarily, { passive: true });
+  commentsBox.addEventListener("mousemove", () => {}); // iOS 사파리에서 깜빡임 방지용(무시해도 됨)
 }
+
 
 // ===== 댓글 작성 =====
 if (submitBtn) {
@@ -856,6 +866,7 @@ commentsBox.addEventListener("click", async (e) => {
 
 </body>
 </html>
+
 
 
 
