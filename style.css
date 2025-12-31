@@ -745,4 +745,19 @@ body {
   background: rgba(255,255,255,0.15);
 }
 
+#comments::-webkit-scrollbar {
+  width: 6px;
+  transition: opacity .3s ease;
+}
+
+#comments::-webkit-scrollbar-thumb {
+  background: transparent;
+  transition: background .3s ease;
+}
+
+/* 마우스 올렸을 때만 살아남 */
+#comments:hover::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.35);
+}
+
 
