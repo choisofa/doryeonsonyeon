@@ -796,6 +796,10 @@ body {
   letter-spacing: 0.2px;
 }
 
+.track-meta{
+  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
 
 
 
