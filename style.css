@@ -845,16 +845,58 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #000; /* 검은 배경 (원하면 transparent로 바꿔도 됨) */
+    background: #000; /* 검은 배경 */
   }
 
+  /* (1) iOS Safari 링크 파란색/visited 보라색/터치 하이라이트까지 싹 흰색 고정 */
+  a, a:link, a:visited, a:hover, a:active {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    text-decoration: none !important;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* 네가 쓰던 링크 클래스(예: external-link)도 같이 흰색 고정 */
+  .external-link, .external-link:link, .external-link:visited,
+  .external-link:hover, .external-link:active {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    text-decoration: none !important;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* 링크가 들어갈 수 있는 영역들까지 글자색 흰색 고정 */
+  #about, .about, #lyrics, .lyrics, .links, .link-grid, .link-grid a {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+
+  /* (2) 트랙리스트는 가로 정중앙 */
+  #tracklist, .tracklist {
+    width: 92vw;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* (3) 앨범커버를 트랙리스트 "밑으로" + 가로 정중앙 (구조가 달라도 먹게 margin으로 강제) */
+  #album-cover, .album-cover, .album-art, .cover {
+    display: block;
+    margin: 16px auto 0;  /* 핵심: 위쪽 마진으로 아래로 내림 + auto로 중앙 */
+    width: min(86vw, 360px);
+    height: auto;
+  }
+
+  /* 인트로 영상 세로 화면 꽉 차게 */
   #intro-video{
     width: 100vw;
     height: 100dvh;        /* iOS 주소창 고려 */
-    object-fit: contain;   /* 영상 전체가 화면 안에 들어오게 (안 잘림) */
+    object-fit: contain;   /* 영상 전체가 화면 안에 들어오게 */
     background: #000;
   }
 }
+
+
 
 
 
