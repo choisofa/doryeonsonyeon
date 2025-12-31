@@ -11,9 +11,14 @@
 <!-- ================= 인트로 ================= -->
 <div id="intro-overlay">
   <video id="intro-video" autoplay muted playsinline>
-   <source src="introtrans.webm" type="video/webm">
+    <!-- ✅ 모바일 세로 전용: 세로 인트로 mp4 -->
+    <source src="intro-portrait.mp4" type="video/mp4" media="(max-width: 768px) and (orientation: portrait)">
+
+    <!-- ✅ 그 외(PC 포함): 기존 인트로 -->
+    <source src="introtrans.webm" type="video/webm">
   </video>
 </div>
+
 
 
 <!-- ================= 레이아웃 ================= -->
@@ -949,6 +954,7 @@ commentsBox.addEventListener("click", async (e) => {
 
 </body>
 </html>
+
 
 
 
