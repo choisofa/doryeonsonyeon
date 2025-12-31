@@ -731,7 +731,7 @@ logo.addEventListener('click', () => {
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import {
   getFirestore, collection, addDoc, serverTimestamp,
-  query, orderBy, onSnapshot, doc, deleteDoc
+  query, orderBy, onSnapshot, doc, deleteDoc, Timestamp
 } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 import {
   getAuth, signInAnonymously, onAuthStateChanged
@@ -829,6 +829,37 @@ if (submitBtn) {
   };
 }
 
+function kTime(date) {
+  const now = new Date();
+  const diffMs = now - date;
+
+  const diffMin = Math.floor(diffMs / 60000);
+  const diffHr  = Math.floor(diffMs / 3600000);
+
+  if (diffMin < 1) return "지금";
+  if (diffMin < 5) return "방금";
+  if (diffMin < 60) return `${diffMin}분 전`;
+
+  // 자정 기준 오늘/어제/그제
+  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const startOfThat  = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const dayGap = Math.floor((startOfToday - startOfThat) / 86400000);
+
+  if (dayGap === 0) {
+    if (diffHr < 6) return `${diffHr}시간 전`;
+    return "오늘";
+  }
+  if (dayGap === 1) return "어제";
+  if (dayGap === 2) return "그제";
+  if (dayGap < 7) return `${dayGap}일 전`;
+
+  const m = date.getMonth() + 1;
+  const d = date.getDate();
+  return `${m}/${d}`;
+}
+
+
+
 // ===== 실시간 렌더 =====
 const q = query(collection(db, "comments"), orderBy("created", "desc"));
 
@@ -840,19 +871,32 @@ onAuthStateChanged(auth, () => {
       const c = d.data();
       const mine = (auth.currentUser && c.uid === auth.currentUser.uid);
 
+      // 작성시간 텍스트
+      let timeText = "";
+      if (c.created && typeof c.created.toDate === "function") {
+        timeText = kTime(c.created.toDate());
+      }
+
       const div = document.createElement("div");
       div.className = "comment";
       div.innerHTML = `
         <div class="cmt-head">
           <b>${c.nickname || "익명"}</b>
-          ${mine ? `<span class="delBtn" data-id="${d.id}">✕</span>` : ``}
+
+          <span class="cmt-right">
+            ${timeText ? `<span class="cmt-time">${timeText}</span>` : ``}
+            ${mine ? `<span class="delBtn" data-id="${d.id}">✕</span>` : ``}
+          </span>
         </div>
+
         <div class="cmt-body">${(c.text || "").replaceAll("\n","<br>")}</div>
       `;
+
       commentsBox.appendChild(div);
     });
   });
 });
+
 
 // ===== 내 댓글 삭제 =====
 commentsBox.addEventListener("click", async (e) => {
@@ -877,6 +921,7 @@ commentsBox.addEventListener("click", async (e) => {
 
 </body>
 </html>
+
 
 
 
