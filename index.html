@@ -773,36 +773,47 @@ const commentsBox   = document.getElementById("comments");
 // 닉네임 저장(로컬)
 if (nicknameInput) nicknameInput.value = localStorage.getItem("nickname") || "";
 
-// ===== 스크롤바: 평소 숨김, 휠 첫 번부터 바로 스크롤 + 1초 후 다시 숨김 =====
+// ===== 스크롤: 평소 숨김 / 마우스 올리면 바로 열기 / 스크롤바도 같이 =====
 let sbTimer;
 if (commentsBox) {
   // 기본은 닫힘
   commentsBox.style.overflowY = "hidden";
 
-const openNow = () => {
-  commentsBox.style.overflowY = "auto";
-  commentsBox.classList.add("show-scrollbar"); // ✅ 스크롤바 보이게
+  const openNow = () => {
+    commentsBox.style.overflowY = "auto";
+    commentsBox.classList.add("show-scrollbar");
+    clearTimeout(sbTimer);
+  };
 
-  clearTimeout(sbTimer);
-  sbTimer = setTimeout(() => {
-    commentsBox.style.overflowY = "hidden";
-    commentsBox.classList.remove("show-scrollbar"); // ✅ 다시 숨기기
-  }, 1000);
-};
+  const closeLater = () => {
+    clearTimeout(sbTimer);
+    sbTimer = setTimeout(() => {
+      commentsBox.style.overflowY = "hidden";
+      commentsBox.classList.remove("show-scrollbar");
+    }, 1000);
+  };
 
+  // ✅ 마우스 올리면 바로 열림
+  commentsBox.addEventListener("mouseenter", () => {
+    openNow();
+  });
 
-  // ✅ 첫 휠부터 바로 움직이게: deltaY를 직접 반영
+  // ✅ 마우스 빼면 1초 후 닫힘
+  commentsBox.addEventListener("mouseleave", () => {
+    closeLater();
+  });
+
+  // ✅ 휠 굴리면 첫 휠부터 바로 스크롤 (속도 조절)
   commentsBox.addEventListener("wheel", (e) => {
     openNow();
-
-    // 기본 스크롤을 막고 우리가 직접 스크롤 이동시킴
     e.preventDefault();
-    commentsBox.scrollTop += e.deltaY * 0.45;
+    commentsBox.scrollTop += e.deltaY * 0.45; // 느리게/빠르게: 0.35~0.6
+    closeLater();
   }, { passive: false });
 
-  // 모바일/터치 시작 시도도 열어주기(터치는 기본 스크롤 그대로 사용)
+  // 모바일 터치도 열어주기
   commentsBox.addEventListener("touchstart", openNow, { passive: true });
-  commentsBox.addEventListener("touchmove", openNow, { passive: true });
+  commentsBox.addEventListener("touchend", closeLater, { passive: true });
 }
 
 
@@ -921,6 +932,7 @@ commentsBox.addEventListener("click", async (e) => {
 
 </body>
 </html>
+
 
 
 
