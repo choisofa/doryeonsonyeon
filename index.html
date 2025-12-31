@@ -631,6 +631,35 @@ const albumLinks = document.getElementById('album-links');
 const albumCover = document.querySelector('.album-cover');
   const intro = document.getElementById('intro-overlay');
 const introVideo = document.getElementById('intro-video');
+    // ===== 인트로 동안 로고 숨기기(모바일 세로에서만) =====
+  const mqIntro = window.matchMedia("(max-width: 768px) and (orientation: portrait)");
+
+  function setIntroState() {
+    if (!mqIntro.matches) {
+      document.body.classList.remove("intro-active");
+      return;
+    }
+    // intro가 아직 보이면 intro-active 유지
+    if (intro && !intro.classList.contains("hidden")) {
+      document.body.classList.add("intro-active");
+    } else {
+      document.body.classList.remove("intro-active");
+    }
+  }
+
+  setIntroState();
+  if (mqIntro.addEventListener) mqIntro.addEventListener("change", setIntroState);
+  else mqIntro.addListener(setIntroState);
+
+  // 영상 끝나서 hidden 붙일 때도 같이 반영
+  if (introVideo) {
+    introVideo.addEventListener("ended", () => {
+      setIntroState();
+    });
+  }
+  // 너가 가진 4초 강제 제거 타이머 이후도 반영되게
+  setTimeout(setIntroState, 4500);
+
   // ===== 모바일에서 앨범커버 위치 이동(타이틀 밑으로) =====
 const mobileAlbumSlot = document.getElementById('mobile-album-slot');
 const albumHeroOriginalParent = albumHero?.parentElement;
@@ -989,6 +1018,7 @@ commentsBox.addEventListener("click", async (e) => {
 
 </body>
 </html>
+
 
 
 
