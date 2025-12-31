@@ -1030,6 +1030,95 @@ body {
   }
 }
 
+/* =========================
+   MOBILE FIX PATCH (맨 아래에 복붙)
+   - 로고 클릭 막힘 해결
+   - about(댓글창) 로고 위로 띄우기
+   - 뒤로가기 화살표 흰색
+   - 모바일 앨범 링크 가운데 정렬
+========================= */
+@media (max-width: 768px) {
+
+  /* 1) 로고는 무조건 최상단 + 항상 클릭 가능 */
+  .logo-floating{
+    position: fixed !important;
+    right: 16px !important;
+    bottom: 16px !important;
+    top: auto !important;
+    left: auto !important;
+    z-index: 99999 !important;
+    pointer-events: auto !important;
+  }
+
+  #logo-toggle{
+    position: relative !important;
+    z-index: 99999 !important;
+    pointer-events: auto !important;
+  }
+
+  /* 2) about(설명+댓글)은 로고를 덮지 말고 "로고 위 패널"로 띄우기 */
+  #about.about-visible{
+    position: fixed !important;
+    right: 16px !important;
+    bottom: 96px !important; /* 로고 위로 띄우는 높이 (원하면 80~140 사이로 조절) */
+
+    width: min(92vw, 420px) !important;
+    max-height: 70vh !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch;
+
+    z-index: 99990 !important; /* 로고보다 살짝 아래 */
+    margin: 0 !important;
+    padding: 0 !important;
+
+    pointer-events: auto !important;
+  }
+
+  #about.about-hidden{
+    display: none !important;
+  }
+
+  /* about 안의 내용은 가운데 느낌으로 (링크/버튼 왼쪽쏠림 방지) */
+  #about{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  #about p{ width: 100% !important; }
+  #about .link-grid{
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  #about .link-grid a{
+    text-align: center !important;
+  }
+
+  /* 3) 앨범커버 눌렀을 때 뜨는 플랫폼 링크(#album-links)도 가운데 정렬 */
+  #album-links{
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  #album-links a{
+    display: block !important;
+    text-align: center !important;
+  }
+
+  /* 4) 가사 들어갈 때 뒤로가기 화살표 흰색 */
+  .mobile-back::before{
+    color: #fff !important;
+  }
+}
+
+/* 5) iOS 아래 흰띠(바운스) 보이면 배경색도 검정으로 안전빵 */
+@media (max-width: 768px) and (orientation: portrait){
+  html, body{
+    background: #000 !important;
+  }
+}
+
 
 
 
