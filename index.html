@@ -779,13 +779,17 @@ if (commentsBox) {
   // 기본은 닫힘
   commentsBox.style.overflowY = "hidden";
 
-  const openNow = () => {
-    commentsBox.style.overflowY = "auto";
-    clearTimeout(sbTimer);
-    sbTimer = setTimeout(() => {
-      commentsBox.style.overflowY = "hidden";
-    }, 1000);
-  };
+const openNow = () => {
+  commentsBox.style.overflowY = "auto";
+  commentsBox.classList.add("show-scrollbar"); // ✅ 스크롤바 보이게
+
+  clearTimeout(sbTimer);
+  sbTimer = setTimeout(() => {
+    commentsBox.style.overflowY = "hidden";
+    commentsBox.classList.remove("show-scrollbar"); // ✅ 다시 숨기기
+  }, 1000);
+};
+
 
   // ✅ 첫 휠부터 바로 움직이게: deltaY를 직접 반영
   commentsBox.addEventListener("wheel", (e) => {
@@ -873,6 +877,7 @@ commentsBox.addEventListener("click", async (e) => {
 
 </body>
 </html>
+
 
 
 
