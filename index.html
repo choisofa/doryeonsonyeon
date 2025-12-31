@@ -729,10 +729,13 @@ logo.addEventListener('click', () => {
   </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, deleteDoc }
-from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-import { getAuth, signInAnonymously, onAuthStateChanged }
-from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import {
+  getFirestore, collection, addDoc, serverTimestamp,
+  query, orderBy, onSnapshot, doc, deleteDoc
+} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import {
+  getAuth, signInAnonymously, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCDzMtqWIo8eq3rYTLA89cHovl5zalNABA",
@@ -747,25 +750,40 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ===== 익명 로그인 (내 댓글만 삭제용 uid 만들기) =====
+// ===== 익명 로그인 (내 댓글만 삭제용) =====
 const auth = getAuth(app);
 signInAnonymously(auth).catch(console.error);
 
-// ===== UI 토글 =====
+// ===== 코멘트 폼 토글 =====
 const openBtn = document.getElementById("openComment");
 const form = document.getElementById("commentForm");
 if (openBtn && form) {
   openBtn.onclick = () => {
-    form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+    const hidden = (form.style.display === "none" || form.style.display === "");
+    form.style.display = hidden ? "block" : "none";
   };
 }
 
+// ===== DOM =====
 const nicknameInput = document.getElementById("nickname");
 const commentInput  = document.getElementById("commentInput");
 const submitBtn     = document.getElementById("submitComment");
 const commentsBox   = document.getElementById("comments");
 
+// 닉네임 저장(로컬)
 if (nicknameInput) nicknameInput.value = localStorage.getItem("nickname") || "";
+
+// ===== 스크롤바: 스크롤 중에만 1초 표시 =====
+let sbTimer;
+if (commentsBox) {
+  commentsBox.addEventListener("scroll", () => {
+    commentsBox.classList.add("show-scrollbar");
+    clearTimeout(sbTimer);
+    sbTimer = setTimeout(() => {
+      commentsBox.classList.remove("show-scrollbar");
+    }, 1000);
+  });
+}
 
 // ===== 댓글 작성 =====
 if (submitBtn) {
@@ -776,8 +794,8 @@ if (submitBtn) {
 
     localStorage.setItem("nickname", nickname);
 
-    const user = auth.currentUser; // 익명 로그인 유저
-    if (!user) return; // 아직 로그인 전이면 잠깐 기다려야 함
+    const user = auth.currentUser;
+    if (!user) return;
 
     await addDoc(collection(db, "comments"), {
       nickname,
@@ -808,19 +826,18 @@ onAuthStateChanged(auth, () => {
           <b>${c.nickname || "익명"}</b>
           ${mine ? `<span class="delBtn" data-id="${d.id}">✕</span>` : ``}
         </div>
-        <div class="cmt-body">${c.text || ""}</div>
+        <div class="cmt-body">${(c.text || "").replaceAll("\n","<br>")}</div>
       `;
-
       commentsBox.appendChild(div);
     });
   });
 });
 
-// ===== 내 댓글 삭제 (이벤트 위임) =====
+// ===== 내 댓글 삭제 =====
 commentsBox.addEventListener("click", async (e) => {
-  const target = e.target;
-  if (target.classList.contains("delBtn")) {
-    const id = target.dataset.id;
+  const t = e.target;
+  if (t.classList.contains("delBtn")) {
+    const id = t.dataset.id;
     try {
       await deleteDoc(doc(db, "comments", id));
     } catch (err) {
@@ -839,6 +856,7 @@ commentsBox.addEventListener("click", async (e) => {
 
 </body>
 </html>
+
 
 
 
