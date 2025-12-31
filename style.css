@@ -760,4 +760,20 @@ body {
   background: rgba(255,255,255,0.35);
 }
 
+.cmt-head{
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+}
+
+.delBtn{
+  cursor:pointer;
+  opacity:.6;
+  padding-left:10px;
+}
+
+.delBtn:hover{
+  opacity:1;
+}
+
 
