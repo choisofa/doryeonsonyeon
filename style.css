@@ -1185,11 +1185,13 @@ body {
   }
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap');
 
 .fix-font {
-  font-family: "Nanum Pen Script", cursive !important;
+  font-family: "Hi Melody", -apple-system, BlinkMacSystemFont, system-ui, cursive !important;
 }
+
+
 
 
 
