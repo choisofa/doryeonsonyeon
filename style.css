@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap');
+
+/* 그 다음부터 다른 CSS */
+
 /* ===== 어비 폰트 웹폰트 적용 ===== */
 @font-face {
   font-family: "Uhbee NaHyun";
@@ -1185,15 +1189,12 @@ body {
   }
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap');
-
-.fix-font {
+.fix-font,
+span.fix-font,
+.lyrics-text span.fix-font {
   font-family: "Hi Melody", -apple-system, BlinkMacSystemFont, system-ui, cursive !important;
 }
 
-span.fix-font {
-  font-family: "Hi Melody", cursive !important;
-}
 
 
 
