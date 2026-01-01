@@ -1191,6 +1191,11 @@ body {
   font-family: "Hi Melody", -apple-system, BlinkMacSystemFont, system-ui, cursive !important;
 }
 
+span.fix-font {
+  font-family: "Hi Melody", cursive !important;
+}
+
+
 
 
 
