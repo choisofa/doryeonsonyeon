@@ -1189,17 +1189,13 @@ body {
   }
 }
 
-.fix-font,
-span.fix-font,
-.lyrics-text span.fix-font {
-  font-family: "Hi Melody", -apple-system, BlinkMacSystemFont, system-ui, cursive !important;
-}
 
 .lyrics-text span.fix-font,
 span.fix-font,
 .fix-font {
   font-family: "Hi Melody", cursive !important;
 }
+
 
 
 
