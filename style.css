@@ -1188,8 +1188,10 @@ body {
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
 
 .fix-font {
-  font-family: "Nanum Pen Script", cursive;
+  font-family: "Nanum Pen Script", cursive !important;
 }
+
+
 
 
 
