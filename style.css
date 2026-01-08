@@ -839,6 +839,21 @@ body {
   font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
+.track-mv{
+  opacity: 0.85;
+  text-decoration: none;
+}
+
+.track-mv::before{
+  content: "·";
+  margin-right: 6px;
+  opacity: 0.9;
+}
+
+.track-mv:hover{
+  opacity: 1;
+  text-decoration: underline;
+}
 /* =========================
    인트로: 모바일 세로 전용 보정
    - 화면 중앙 정렬
@@ -1195,6 +1210,7 @@ span.fix-font,
 .fix-font {
   font-family: "Hi Melody", cursive !important;
 }
+
 
 
 
