@@ -839,21 +839,31 @@ body {
   font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-.track-mv{
-  opacity: 0.85;
-  text-decoration: none;
+/* Music Video 링크: 파란색/보라색(visited) 제거 */
+.track-mv,
+.track-mv:visited{
+  color: inherit;          /* 주변 글자색 따라감 */
 }
 
+/* 점도 같이 톤 다운 */
 .track-mv::before{
   content: "·";
   margin-right: 6px;
-  opacity: 0.9;
+  color: inherit;          /* 점도 글자색 따라감 */
+  opacity: 0.6;            /* 점은 더 연하게 */
+}
+
+/* 링크는 티만 살짝 나게 */
+.track-mv{
+  opacity: 0.7;
+  text-decoration: none;
 }
 
 .track-mv:hover{
   opacity: 1;
   text-decoration: underline;
 }
+
 /* =========================
    인트로: 모바일 세로 전용 보정
    - 화면 중앙 정렬
@@ -1210,6 +1220,7 @@ span.fix-font,
 .fix-font {
   font-family: "Hi Melody", cursive !important;
 }
+
 
 
 
